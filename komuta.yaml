@@ -1,0 +1,30 @@
+version: 1
+name: komuta-node-stack
+target:
+  project: myproject
+  region: de-east
+  connections:
+    git: github-app-z25441925
+    registry: komuta
+services:
+  - name: komuta-node-test
+    source:
+      repository: https://github.com/z25441925/komuta-node-test.git
+      branch: main
+    build:
+      strategy: dockerfile
+    compute:
+      plan: dz-nano
+    ports:
+      - name: http
+        protocol: TCP
+        containerPort: 8080
+        primary: true
+      - name: echo-tcp
+        protocol: TCP
+        containerPort: 9000
+      - name: echo-udp
+        protocol: UDP
+        containerPort: 9000
+    network:
+      public: true
